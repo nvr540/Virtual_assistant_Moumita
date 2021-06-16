@@ -4,7 +4,6 @@ import datetime
 import webbrowser
 import speech_recognition as sr
 import os
-from pyautogui import *
 import random
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -41,7 +40,7 @@ def wishMe():
         speak("Good Night, Nivrito. I'm Moumita in your service")
     else:
         speak("Good night Nivrito. You should sleep now. Do you need any help")
-
+    speak("Please call me with my name. To start the process")
 
 def webBrowser(string):
     chrome_path = '"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" %s'
@@ -52,11 +51,12 @@ def webBrowser(string):
 
 
 def listen():
+    print("Listening")
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        r.pause_threshold = 0.5
-        r.phrase_threshold = 0.5
-        r.energy_threshold = 700
+        r.pause_threshold = 0.6
+        # r.phrase_threshold = 0.5
+        # r.energy_threshold = 
         audio = r.listen(source)
     try:
         command = r.recognize_google(audio, language="en-US")
@@ -88,7 +88,7 @@ if __name__ == '__main__':
                           "what's going on", "what is going on"]
     musicDir = 'C:\\Users\\Moumita\\Music'
     songs = os.listdir(musicDir)
-    # wishMe()
+    wishMe()
     i = 0
     line = 1
     while True:
@@ -126,6 +126,8 @@ if __name__ == '__main__':
                     break
                 elif any(word in command for word in ['song', 'music', 'gun', 'gan', 'gaan']):
                     musicPlayer(command)
+                elif "burpsuite" in command or "burp" in command:
+                    os.startfile("F:\Burpsuite_Software\launch_bat.vbs")
                 else:
                     if command != 'none':
                         if i == 0:
@@ -137,4 +139,7 @@ if __name__ == '__main__':
                             goto(2)
                             break
                         i += 1
-    # hotkey('alt', 'f9')
+        else:
+            speak(f"My name is not {query}. Please call me correctly Or I will not Help you")
+    # pyautogui.press('win')
+    # pyautogui.write('music')
