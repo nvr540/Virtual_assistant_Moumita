@@ -5,6 +5,8 @@ import webbrowser
 import speech_recognition as sr
 import os
 import random
+from word2number import w2n
+from searchGoogle import searchGoogle, searchYoutube
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
@@ -20,8 +22,14 @@ def hello(command):
     if "moumita" not in command and len(command.split(" ")) > 1:
         command = command.split(" ")
         speak(f"By the way, My name is Moumita, not {command[1]}")
-
-
+def wordToNumber(string):
+    num = 1
+    for word in string.split(" "):
+        try:
+           num = w2n.word_to_num(word)
+        except:
+            continue
+    return num
 def statusAnswer():
     speak("I am working well, Sir. At present, I am waiting for you order. What about you?")
 
@@ -88,7 +96,7 @@ if __name__ == '__main__':
                           "what's going on", "what is going on"]
     musicDir = 'C:\\Users\\Moumita\\Music'
     songs = os.listdir(musicDir)
-    wishMe()
+    # wishMe()
     i = 0
     line = 1
     while True:
@@ -126,6 +134,23 @@ if __name__ == '__main__':
                     break
                 elif any(word in command for word in ['song', 'music', 'gun', 'gan', 'gaan']):
                     musicPlayer(command)
+                elif "search" in command:
+                    command = command.replace("search", '')
+                    if "google" in command:
+                        command = command.replace("google", '').replace("on", '')
+                        webbrowser.open(f"https://www.google.com/search?q={command}")
+                        speak("Do you want to open any link")
+                        ans = listen()
+                        if "yes" in ans or "yep" in ans or "yup" in ans:
+                            num = wordToNumber(ans)
+                            searchGoogle(command, num)
+                            speak(f"Opening first {num} link")
+                        else:
+                            speak("Ok, Not opening any link")
+                            speak()
+                    elif "youtube" in command:
+                        command = command.replace("youtube", '').replace('on', '')
+                        searchYoutube(command)
                 elif "burpsuite" in command or "burp" in command:
                     os.startfile("F:\Burpsuite_Software\launch_bat.vbs")
                 else:
@@ -141,5 +166,6 @@ if __name__ == '__main__':
                         i += 1
         else:
             speak(f"My name is not {query}. Please call me correctly Or I will not Help you")
+   
     # pyautogui.press('win')
     # pyautogui.write('music')
