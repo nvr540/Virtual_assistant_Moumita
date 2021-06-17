@@ -1,3 +1,4 @@
+from typing import Text
 import pyautogui
 import pyttsx3
 import datetime
@@ -5,6 +6,7 @@ import webbrowser
 import speech_recognition as sr
 import os
 import random
+import smtplib
 from word2number import w2n
 from searchGoogle import searchGoogle, searchYoutube
 engine = pyttsx3.init()
@@ -33,7 +35,15 @@ def wordToNumber(string):
         except:
             continue
     return num
-
+def sendGmail(password, emailOfReceiver, Subject, Body):
+    """Sending email to gmail users"""
+    message = f"Subject: {Subject}\n\n{Body}"
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login("shahedparves111@gmail.com", password)
+    server.sendmail("shahedparves111@gmail.com",
+                    emailOfReceiver,
+                    message)
 def wishMe():
     """It's a wishing function that will wish me according to the time. And run on every time I run it"""
     hour = datetime.datetime.now().hour
@@ -126,6 +136,27 @@ if __name__ == '__main__':
                     speak("I am closing Sir.")
                     goto(2)
                     break
+                elif "send email" in command:
+                    speak("Please Enter the email Address, where you want to send email")
+                    emailOfReceiver = pyautogui.prompt(text="Enter Your Email",title="Email Address")
+                    speak("Please Enter your password")
+                    password = pyautogui.password(text="Enter Your pass",title="Email Address")
+                    Subject = pyautogui.prompt(text="Enter The Subject of email",title="Subject")
+                    Body = pyautogui.prompt(text="Enter The Body of email",title="Body")
+                    try:
+                        sendGmail(password, emailOfReceiver, Subject, Body)
+                        speak("Email Sent")
+                    except:
+                        speak("Something went wrong. Please enter your pass and receiver email again")
+                        emailOfReceiver = pyautogui.prompt(text="Enter Your Email",title="Email Address")
+                        password = pyautogui.password(text="Enter Your pass",title="Email Address")
+                        try:
+                            sendGmail(password, emailOfReceiver, Subject, Body)
+                            speak("Email Sent")
+                        except:
+                            speak("Sorry! Again Something getting wrong. Closing the email sending process")
+
+
                 elif 'shutdown' in command:
                     speak("Are you sure?")
                     answer = str(listen()).lower()
@@ -171,6 +202,6 @@ if __name__ == '__main__':
                         i += 1
         else:
             speak(f"My name is not {query}. Please call me correctly Or I will not Help you")
-   
+    
     # pyautogui.press('win')
     # pyautogui.write('music')
