@@ -1,3 +1,4 @@
+from math import perm
 from typing import Text
 import pyautogui
 import pyttsx3
@@ -126,15 +127,16 @@ if __name__ == '__main__':
                 print(command)
                 if any(word in command for word in greetings):
                     hello(command)
+                elif command == "moumita":
+                    speak("I am on Sir. You can order me anything.")
+                elif command =="Bring me a glass of water":
+                    speak("Sorry Sir I can't do that.Because I don't have legs.")
                 elif "i am fine" in command:
                     speak("That's great! Sirrrr")
                 elif command in someGreetQuestions:
                     speak("I am working well, Sir. At present, I am waiting for you order. What about you?")
                 elif "open" in command:
                     webBrowser(command)
-                elif "quit" in command:
-                    speak("I am closing Sir.")
-                    goto(2)
                     break
                 elif "send email" in command:
                     speak("Please Enter the email Address, where you want to send email")
@@ -155,16 +157,6 @@ if __name__ == '__main__':
                             speak("Email Sent")
                         except:
                             speak("Sorry! Again Something getting wrong. Closing the email sending process")
-
-
-                elif 'shutdown' in command:
-                    speak("Are you sure?")
-                    answer = str(listen()).lower()
-                    answerCanBe = ['yes', 'yep', 'ya', 'yup']
-                    if any(word in command for word in answerCanBe):
-                        os.system('shutdown')
-                    else:
-                        speak("Not shutting down the computer")
                 elif "silence" in command:
                     speak("Ok sir. Please call me with my name when you need me")
                     break
@@ -189,6 +181,19 @@ if __name__ == '__main__':
                         searchYoutube(command)
                 elif "burpsuite" in command or "burp" in command:
                     os.startfile("F:\Burpsuite_Software\launch_bat.vbs")
+
+                elif "quit" in command:
+                    speak("I am closing Sir.")
+                    goto(2)
+
+                elif 'shutdown' in command:
+                    speak("Are you sure?")
+                    answer = str(listen()).lower()
+                    answerCanBe = ['yes', 'yep', 'ya', 'yup']
+                    if any(word in command for word in answerCanBe):
+                        os.system('shutdown')
+                    else:
+                        speak("Not shutting down the computer")
                 else:
                     if command != 'none':
                         if i == 0:
