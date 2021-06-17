@@ -13,16 +13,19 @@ engine.setProperty('voice', voices[1].id)
 
 
 def speak(str):
+    """It's a speaking function which can convert text to Speech"""
     engine.say(str)
     engine.runAndWait()
 
 
 def hello(command):
+    """It's a greeting Function to give response to greeting"""
     speak("Hello Sir, How are you")
     if "moumita" not in command and len(command.split(" ")) > 1:
         command = command.split(" ")
         speak(f"By the way, My name is Moumita, not {command[1]}")
 def wordToNumber(string):
+    """It's a word To Number converting Function"""
     num = 1
     for word in string.split(" "):
         try:
@@ -30,11 +33,9 @@ def wordToNumber(string):
         except:
             continue
     return num
-def statusAnswer():
-    speak("I am working well, Sir. At present, I am waiting for you order. What about you?")
-
 
 def wishMe():
+    """It's a wishing function that will wish me according to the time. And run on every time I run it"""
     hour = datetime.datetime.now().hour
     if hour >= 6 and hour <= 12:
         speak("Good Morning, Nivrita. I'm Moumita in your service")
@@ -51,6 +52,7 @@ def wishMe():
     speak("Please call me with my name. To start the process")
 
 def webBrowser(string):
+    """It wil open the webbrowser chrome. Every time I want to open a domain"""
     chrome_path = '"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" %s'
     web = webbrowser.get(chrome_path)
     domain = string.replace('open ', '')
@@ -59,6 +61,7 @@ def webBrowser(string):
 
 
 def listen():
+    """It listen's to my words and conversts it to text"""
     print("Listening")
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -74,11 +77,13 @@ def listen():
 
 
 def goto(linenum):
+    """It's a simple goto function"""
     global line
     line = linenum
 
 
 def musicPlayer(command):
+    """It starts the music player and plays a random song of my computer also a playlist of my computer"""
     if 'bangla' in command:
         os.startfile("C:\\Users\\Moumita\\Music\\Playlists\\Bangla_Songs.zpl")
     elif 'play' in command:
@@ -96,7 +101,7 @@ if __name__ == '__main__':
                           "what's going on", "what is going on"]
     musicDir = 'C:\\Users\\Moumita\\Music'
     songs = os.listdir(musicDir)
-    # wishMe()
+    wishMe()
     i = 0
     line = 1
     while True:
@@ -114,7 +119,7 @@ if __name__ == '__main__':
                 elif "i am fine" in command:
                     speak("That's great! Sirrrr")
                 elif command in someGreetQuestions:
-                    statusAnswer()
+                    speak("I am working well, Sir. At present, I am waiting for you order. What about you?")
                 elif "open" in command:
                     webBrowser(command)
                 elif "quit" in command:
