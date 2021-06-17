@@ -1,7 +1,12 @@
 from os import name
 from typing import Mapping
 from bs4 import BeautifulSoup
-import requests, html5lib, webbrowser
+import bs4
+import requests, html5lib, webbrowser, urllib.request, re
+def searchYoutube(searched, numberOfTab):
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+    url = "https://www.youtube.com/results?search_query=hack"
+    webbrowser.open(url)
 def searchGoogle(searched, numberOfTab):
     url = f"https://www.google.com/search?q={searched}"
     r = requests.get(url)
@@ -16,7 +21,7 @@ def searchGoogle(searched, numberOfTab):
         if i > numberOfTab:
             break
 if __name__ == '__main__':
-    searchGoogle("nivrta podder", 3)
+    searchYoutube("hack", 3)
 
 # linkElements = soup.select('.r a')
 # print(linkElements)
